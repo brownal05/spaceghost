@@ -10,6 +10,7 @@ def init_browser():
     return Browser('chrome', **executable_path, headless=False)
 
 def scrape_info():
+    def 
     # Making space soup
     browser = init_browser()
     url = 'https://www.nasa.gov/missions/'
@@ -29,19 +30,23 @@ def scrape_info():
             title_list.append(links[i].text)
         else:
                 print('No Mission Page')
+    mission_dict = {}
+    mission_dict["Mission"] = title_list
+    mission_dict["Mission Link"] = link_list             
 
     url = 'https://www.cdscc.nasa.gov/Pages/trackingtoday.html'
     html = browser.visit(url)
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')       
-    tables = pd.read_html(url) 
-    abv_tables = pd.DataFrame(tables[3])
-    abv_tables.columns = ['ABV', 'Name']         
+    abv_table = pd.read_html(url)[3] 
+
+    abv_table.columns = ['ABV', 'Name']         
+    abv_dict = abv_table.to_dict("records")
+    
     # Platting the soup            
     mission_data = {
-        "links" : link_list,
-        "titles" : title_list,
-        "ABV" : abv_tables['ABV'],
-        "Name" : abv_tables['Name']
-        }        
-    return print(mission_data)
+        "Mission_titles" : mission_dict,
+        "Mission_Code" : abv_dict
+        } 
+    browser.quit()           
+    return mission_data
