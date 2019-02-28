@@ -10,7 +10,6 @@ def init_browser():
     return Browser('chrome', **executable_path, headless=False)
 
 def scrape_info():
-    def 
     # Making space soup
     browser = init_browser()
     url = 'https://www.nasa.gov/missions/'

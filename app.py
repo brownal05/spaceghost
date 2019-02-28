@@ -11,15 +11,14 @@ mongo = PyMongo(app, uri="mongodb://localhost:27017/nasa_app")
 
 @app.route("/")
 def index():
-    # write a statement that finds all the items in the db and sets it to a variable
     input_data = mongo.db.nasa.find_one()
     
-    landing_page = '''<h1>Deep Space Network API</h1>
-    <p> Available links<p>
-    <p> /api/v1/all </p>
-    <p> /api/v1/active</p>'''
-    # render an index.html template and pass it the data you retrieved from the database
-    return landing_page
+  #  landing_page = '''<h1>Deep Space Network API</h1>
+   # <p> Available links<p>
+    #<p> /api/v1/all </p>
+   # <p> /api/v1/active</p>'''
+
+    return render_template("index.html", input_data=input_data)  
 
 @app.route("/scrape")
 def scrape():
@@ -31,11 +30,11 @@ def scrape():
 
 @app.route("/api/v1/all")
 def all():
-    full = mongo.db.nasa.find_one("Mission_titles")
 
+    full = mongo.db.nasa.find_one({})
 
-    return full
-    #return render_template("index.html", input_data=full_data)  
+    return jsonify(list(full['Mission_titles']['Mission']))
+   # return render_template("index.html", input_data=full_data)  
 
 if __name__ == "__main__":
     app.run(debug=True)
