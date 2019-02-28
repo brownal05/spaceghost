@@ -41,9 +41,35 @@ def scrape_info():
 
     abv_table.columns = ['ABV', 'Name']         
     abv_dict = abv_table.to_dict("records")
+
+    
+    MADRID = {}
+    GOLDSTONE = {}
+    CANBERRA = {}
+    browser.visit('https://eyes.jpl.nasa.gov/dsn/dsn.html')
+    time.sleep(.3)
+    for i in browser.find_by_tag('a'):
+        if i['class']=='inactive' or None:
+            pass
+        elif i.text == '':
+            pass
+        elif i['id'] == '' or None:
+            pass                
+        else:
+            if i['id'][:2] == 'sp':
+                ABV = i.text
+                if i['id'][-5] == '0':
+                    MADRID[ABV] = {}
+                elif i['id'][-5] == '1':
+                    GOLDSTONE[ABV] = {}  
+                elif i['id'][-5] == '2':
+                    CANBERRA[ABV] = {}
     
     # Platting the soup            
     mission_data = {
+        "Madrid" : MADRID,
+        "Goldstone": GOLDSTONE,
+        "Canberra": CANBERRA,
         "Mission_titles" : mission_dict,
         "Mission_Code" : abv_dict
         } 
