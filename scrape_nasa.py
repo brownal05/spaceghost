@@ -64,7 +64,7 @@ def scrape_info():
                     GOLDSTONE[ABV] = {}  
                 elif i['id'][-5] == '2':
                     CANBERRA[ABV] = {}
-    
+   
     # Platting the soup            
     mission_data = {
         "Madrid" : MADRID,
